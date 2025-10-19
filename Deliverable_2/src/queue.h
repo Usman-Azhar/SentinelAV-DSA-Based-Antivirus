@@ -21,7 +21,7 @@ class queue
 private:
     QueueNode<T>* front;    // pointer to First Queue
     QueueNode<T>* rear;     // pointer to Last Queue
-    int Size;               // Total items in Queue
+    int size;               // Total items in Queue
 public:
     queue() : front(nullptr), rear(nullptr), size(0) {};    // create a Queue, it starts empty
 
