@@ -1,0 +1,4 @@
+malware_pattern_001 
+trojan_signature_xyz 
+virus_code_abc123 
+worm_string_456def 
