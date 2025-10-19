@@ -4,53 +4,87 @@
 
 using namespace std;
 
-Scanner:: Scanner() : filesScanned(0){
-
+// Constructor - initializes scanner with 0 files scanned
+Scanner::Scanner() : filesScanned(0) {
+    cout << "[Scanner] Scanner initialized (using Queue for detections)" << endl;
 }
 
-void Scanner :: ScanFile(string const& filename, const SignatureDB& SignDb){
-    cout <<"Scanning File: "<<filename<<endl;
-
+// Main scanning function - reads file and searches for virus patterns
+void Scanner::scanFile(const string& filename, const SignatureDB& sigDB) {
+    cout << "\n[Scanner] Scanning file: " << filename << endl;
+    
     ifstream file(filename);
-
-    if(!file.is_open()){
-        cout<<"File Could not be Opened."<<endl;
+    
+    if (!file.is_open()) {
+        cout << "[Scanner] ERROR: Could not open file!" << endl;
         return;
     }
-
+    
     string line;
-    int linenumber=1;
-
+    int lineNumber = 1;
+    
+    // Read file line by line
     while (getline(file, line)) {
-        // TODO in D3: actual pattern searching here
+        // For each line, check ALL signatures in the database
+        // D2: Simple approach - check each signature one by one
+        // D3 TODO: Will use Aho-Corasick for efficient multi-pattern matching
+        
+        int sigCount = sigDB.getSignatureCount();
+        for (int i = 0; i < sigCount; i++) {
+            string signature = sigDB.getSignatureAt(i);
+            findPatternInLine(line, signature, lineNumber);
+        }
+        
         lineNumber++;
     }
-
+    
+    file.close();
     filesScanned++;
+    
+    cout << "[Scanner] Scan complete. Threats found: " << getThreatCount() << endl;
+}
 
-    cout<<"File Scanned Successfully, DETECTION="<< GettreatCount;
-};
-
-bool Scanner:: findPatterInLine(const string& line, const string& matchedSignature, int lineNumber){
-    if (line.find(patter)!=string::npos){   // Search pattern in line , If found npos means -> not found
-        DetectionResult result;             // Create a detection result
-        result.line = line;                 // Store the line
-        result.matchedSignature=pattern;    // Store the virus pattern
-        result.lineNumber=linenum;          // Store the line number
+// Helper function to find pattern in a line
+bool Scanner::findPatternInLine(const string& line, const string& pattern, int lineNum) {
+    // Simple string search - check if pattern exists in line
+    if (line.find(pattern) != string::npos) {
+        // Pattern found! Create detection result
+        DetectionResult result;
+        result.line = line;
+        result.matchedSignature = pattern;
+        result.lineNumber = lineNum;
         
-        detectionQueue.enqueue(result);     // Add to queue
-        cout << "  Threat Line " << lineNum << ": Found '" << pattern << "'" << endl;
-
-        return true;                        // Pattern was found
+        // Add to detection queue
+        detectionQueue.enqueue(result);
+        cout << "  [!] Threat at line " << lineNum << ": Found '" << pattern << "'" << endl;
+        
+        return true;  // Pattern was found
     }
-    return false;                           // Pattern was not found
+    return false;  // Pattern not found
 }
 
-int Scanner :: getThreatCount(){
-    return detectionQueue.getSize();        // Return size of the queue
+// Get total number of threats detected
+int Scanner::getThreatCount() {
+    return detectionQueue.getSize();
 }
 
-Queue<DetectionResult> &Scanner ::getDetections(){
-    return DetectionQueue;                  // Return reference to the detection queue
+// Get reference to the detection queue
+queue<DetectionResult>& Scanner::getDetections() {
+    return detectionQueue;
 }
 
+// Display implementation status
+void Scanner::displayImplementationStatus() const {
+    cout << "\n[Scanner] Implementation Status:" << endl;
+    cout << "  D2: Queue for detections - IMPLEMENTED" << endl;
+    cout << "  D2: File scanning - IMPLEMENTED" << endl;
+    cout << "  D2: Simple pattern matching - IMPLEMENTED" << endl;
+    cout << "  D3: Aho-Corasick pattern matching - DECLARED (TODO)" << endl;
+    cout << "  D3: Parallel scanning - DECLARED (TODO)" << endl;
+}
+
+// Destructor
+Scanner::~Scanner() {
+    // Queue destructor will handle cleanup
+    cout << "[Scanner] Scanner closed. Total files scanned: " << filesScanned << endl;
+}

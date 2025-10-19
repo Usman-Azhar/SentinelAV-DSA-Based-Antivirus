@@ -1,37 +1,46 @@
+
 #ifndef SCANNER_H
 #define SCANNER_H
 
-#include <iostream>
 #include <string>
 #include "signatureDB.h"
 #include "queue.h"
 
 using namespace std;
 
-struct DetectionResult{
-    string line;                // line of text where virus was found
-    string matchedSignature;    // virus signature that matched
-    int lineNumber;             // line number
+// Structure to hold information about a detected threat
+struct DetectionResult {
+    string line;                // Line of text where virus was found
+    string matchedSignature;    // Virus signature that matched
+    int lineNumber;             // Line number in the file
 };
 
-class Scanner
-{
+class Scanner {
 private:
-    int filesScanned;                       // Track of number of files scanned
-    Queue<DetectionResult> DetectionQueue;  // Queue from queue.h to store detectionresults Objects
-
-    bool findPatternInLine(const string& line, const string& patter, int lineNum){}; // checks if pattern was matched or not
+    int filesScanned;                           // Track number of files scanned
+    queue<DetectionResult> detectionQueue;      // Queue to store all detections
+    
+    // Helper function - checks if pattern exists in a line
+    bool findPatternInLine(const string& line, const string& pattern, int lineNum);
+    
 public:
+    // Constructor
     Scanner();
-
-    void ScanFile(string const& filename, const SignatureDB& SignDb){};     // Read files and Scans for viruses
-
-    int GettreatCount(){};                                                  // returns Total treats found
-
-    Queue<DetectionResult>& getDetections();                                // queue for all detections
-
+    
+    // Main scanning function - reads file and scans for viruses
+    void scanFile(const string& filename, const SignatureDB& sigDB);
+    
+    // Get total number of threats found
+    int getThreatCount();
+    
+    // Get reference to the detection queue
+    queue<DetectionResult>& getDetections();
+    
+    // Display implementation status (for D2 demo)
+    void displayImplementationStatus() const;
+    
+    // Destructor
     ~Scanner();
 };
-
 
 #endif
