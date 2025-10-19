@@ -28,13 +28,7 @@ void Scanner::scanFile(const string& filename, const SignatureDB& sigDB) {
         // For each line, check ALL signatures in the database
         // D2: Simple approach - check each signature one by one
         // D3 TODO: Will use Aho-Corasick for efficient multi-pattern matching
-        
-        int sigCount = sigDB.getSignatureCount();
-        for (int i = 0; i < sigCount; i++) {
-            string signature = sigDB.getSignatureAt(i);
-            findPatternInLine(line, signature, lineNumber);
-        }
-        
+
         lineNumber++;
     }
     
@@ -64,12 +58,12 @@ bool Scanner::findPatternInLine(const string& line, const string& pattern, int l
 }
 
 // Get total number of threats detected
-int Scanner::getThreatCount() {
+int Scanner::getThreatCount() const {
     return detectionQueue.getSize();
 }
 
 // Get reference to the detection queue
-queue<DetectionResult>& Scanner::getDetections() {
+Queue<DetectionResult>& Scanner::getDetections() {
     return detectionQueue;
 }
 

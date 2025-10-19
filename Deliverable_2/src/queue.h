@@ -16,14 +16,14 @@ struct QueueNode {      // QueueNode
 
 template <typename T>
 
-class queue
+class Queue
 {
 private:
     QueueNode<T>* front;    // pointer to First Queue
     QueueNode<T>* rear;     // pointer to Last Queue
     int size;               // Total items in Queue
 public:
-    queue() : front(nullptr), rear(nullptr), size(0) {};    // create a Queue, it starts empty
+    Queue() : front(nullptr), rear(nullptr), size(0) {};    // create a Queue, it starts empty
 
     void enqueue(T val){
         QueueNode<T>* newNode = new QueueNode<T>(val);      // Create a New Node
@@ -64,7 +64,7 @@ public:
         return front->data;
     }
 
-    ~queue(){
+    ~Queue(){
         while (!isEmpty()) {    // Condition Queue Not Empty
             dequeue();          // Remove and delete each node
         }

@@ -18,7 +18,7 @@ struct DetectionResult {
 class Scanner {
 private:
     int filesScanned;                           // Track number of files scanned
-    queue<DetectionResult> detectionQueue;      // Queue to store all detections
+    Queue<DetectionResult> detectionQueue;      // Queue to store all detections
     
     // Helper function - checks if pattern exists in a line
     bool findPatternInLine(const string& line, const string& pattern, int lineNum);
@@ -31,10 +31,10 @@ public:
     void scanFile(const string& filename, const SignatureDB& sigDB);
     
     // Get total number of threats found
-    int getThreatCount();
+    int getThreatCount() const;
     
     // Get reference to the detection queue
-    queue<DetectionResult>& getDetections();
+    Queue<DetectionResult>& getDetections();
     
     // Display implementation status (for D2 demo)
     void displayImplementationStatus() const;

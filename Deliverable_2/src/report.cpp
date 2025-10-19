@@ -54,33 +54,3 @@ void Report::displayImplementationStatus() const {
     cout << "  D3: File export - DECLARED (TODO)" << endl;
 }
 
-int main() {
-    Report report;
-    
-    // Add some test data
-    ScanResult file1 = {"clean.txt", 0, false};
-    ScanResult file2 = {"suspicious.exe", 5, true};
-    ScanResult file3 = {"malware.dll", 2, true};
-    ScanResult file4 = {"document.pdf", 0, false};
-    ScanResult file5 = {"virus.bin", 8, true};
-    
-    report.addResult(file1);
-    report.addResult(file2);
-    report.addResult(file3);
-    report.addResult(file4);
-    report.addResult(file5);
-    
-    cout << "=== BEFORE SORTING ===" << endl;
-    report.displayResults();
-    
-    cout << "\n=== SORTING ===" << endl;
-    report.sortByThreatLevel();
-    
-    cout << "\n=== AFTER SORTING ===" << endl;
-    report.displayResults();
-    
-    cout << "\n=== IMPLEMENTATION STATUS ===" << endl;
-    report.displayImplementationStatus();
-    
-    return 0;
-}
