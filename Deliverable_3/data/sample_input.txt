@@ -1,0 +1,3 @@
+This is a sample file for testing SentinelAV. 
+It contains some normal text. 
+No viruses should be detected here in D2. 

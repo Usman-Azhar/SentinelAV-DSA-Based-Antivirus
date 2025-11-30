@@ -1,0 +1,1 @@
+// Implementing of Aho-Corasick automaton for multi-pattern string matching
