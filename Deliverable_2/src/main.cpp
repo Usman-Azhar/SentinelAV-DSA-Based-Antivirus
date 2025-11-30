@@ -31,7 +31,7 @@ int main() {
     cout << "[DEMO 3] IMPLEMENTED: Queues (Week 6)" << endl;
     cout << "---" << endl;
     Scanner scanner;
-    scanner.scanFile("data/sample_input.txt", sigDB);
+    scanner.scanFile("sample_input.txt", sigDB);
     scanner.displayImplementationStatus();
     cout << endl;
     
@@ -52,19 +52,19 @@ int main() {
     cout << "D2 SKELETON COMPLETE" << endl;
     cout << "=================================" << endl;
     cout << "\nD2 IMPLEMENTED (Week 1-8):" << endl;
-    cout << "  ✓ Pointers (Week 1-2)" << endl;
-    cout << "  ✓ Linked Lists (Week 4-5)" << endl;
-    cout << "  ✓ Linear Search (Week 4)" << endl;
-    cout << "  ✓ Recursion (Week 7)" << endl;
-    cout << "  ✓ Queues (Week 6)" << endl;
-    cout << "  ✓ Sorting / Bubble Sort (Week 8)" << endl;
+    cout << " Pointers (Week 1-2)" << endl;
+    cout << " Linked Lists (Week 4-5)" << endl;
+    cout << " Linear Search (Week 4)" << endl;
+    cout << " Recursion (Week 7)" << endl;
+    cout << " Queues (Week 6)" << endl;
+    cout << " Sorting / Bubble Sort (Week 8)" << endl;
     
     cout << "\nD3+ DECLARED (TODO):" << endl;
-    cout << "  ⧗ Trie (Week 10)" << endl;
-    cout << "  ⧗ Aho-Corasick Automaton (Week 10 + 13-14)" << endl;
-    cout << "  ⧗ Hash Table (Week 13-14)" << endl;
-    cout << "  ⧗ Bloom Filter (Week 13-14)" << endl;
-    cout << "  ⧗ Priority Queue / Heap (Week 15)" << endl;
+    cout << " Trie (Week 10)" << endl;
+    cout << " Aho-Corasick Automaton (Week 10 + 13-14)" << endl;
+    cout << " Hash Table (Week 13-14)" << endl;
+    cout << " Bloom Filter (Week 13-14)" << endl;
+    cout << " Priority Queue / Heap (Week 15)" << endl;
     
     return 0;
 }
