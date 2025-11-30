@@ -1,0 +1,21 @@
+From: unknown@suspicious.com
+To: victim@company.com
+Subject: URGENT: Click here now!
+
+Dear User,
+
+Your account has been compromised! Click the link below:
+http://fake-bank.com/?rootkit_string_404
+
+Our system detected botnet_signature_505 activity from your IP.
+We also found keylogger_pattern_606 monitoring your keystrokes.
+A cryptominer_code_707 is using your CPU resources without permission.
+
+This email contains phishing_string_808 to steal your credentials.
+We noticed an exploit_signature_909 attempting to break into your system.
+There's also payload_pattern_010 ready to execute malicious code.
+The attachment contains shellcode_string_111 for remote access.
+
+Please respond immediately!
+
+[DO NOT CLICK ANY LINKS IN THIS EMAIL]
