@@ -30,6 +30,9 @@ public:
     void scanFile(const string &filename, const SignatureDB &sigDB);
     int getLastFileThreatCount() const;
     Queue<DetectionResult> &getDetections();
+    
+    // Add this method declaration
+    void displayImplementationStatus() const;
 
     ~Scanner();
 };
