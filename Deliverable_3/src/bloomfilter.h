@@ -5,7 +5,7 @@
 #include <string>
 #include <iostream>
 
-
+using namespace std;
 class BloomFilter {
 private:
     vector<bool> bits;
