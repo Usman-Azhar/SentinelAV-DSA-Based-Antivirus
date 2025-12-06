@@ -3,7 +3,7 @@
 
 #include <string>
 #include "linkedlist.h"
-#include "signature.h"
+#include "Signature.h"
 #include "trie.h"
 #include "hashtable.h"
 #include "bloomfilter.h"
