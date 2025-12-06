@@ -3,39 +3,47 @@
 
 #include <string>
 #include <vector>
+#include <queue>
 
 using namespace std;
 
-struct ScanResult {
-    string filename; // Name of the scanned file
-    int threatsFound; // Number of threats found in the file
-    bool isInfected; // Infection status of the file
+struct ScanResult
+{
+    string filename;
+    int threatsFound;
+    bool isInfected;
+
+    ScanResult(string f = "", int t = 0, bool i = false)
+        : filename(f), threatsFound(t), isInfected(i) {}
 };
 
-class Report {
+struct ThreatComparator
+{
+    bool operator()(const ScanResult &a, const ScanResult &b) const
+    {
+        return a.threatsFound < b.threatsFound;
+    }
+};
+
+class Report
+{
 private:
     vector<ScanResult> results;
-    
-    // IMPLEMENTED: Bubble sort for sorting results by threat level
-    void bubbleSort();
+
+    void merge(vector<ScanResult> &arr, int left, int mid, int right);
+    void mergeSortHelper(vector<ScanResult> &arr, int left, int right);
 
 public:
     Report();
-    void addResult(const ScanResult& result);
-    
-    // IMPLEMENTED: Sorting
+
+    void addResult(const ScanResult &result);
     void sortByThreatLevel();
     void displayResults() const;
-    
-    // TODO D3: Use Priority Queue / Heap for ranking
-    // priority_queue<ScanResult> rankedResults;
-    // void buildHeap();
-    // ScanResult getMostDangerousFile();
-    
-    // TODO D3: Export to file
-    // void exportReportToFile(const string& filename);
-    
-    void displayImplementationStatus() const;
+
+    void buildHeap();
+    ScanResult getMostDangerousFile() const;
+    void displayTopThreats(int count) const;
+    void exportToFile(const string &filename) const;
 };
 
 #endif
