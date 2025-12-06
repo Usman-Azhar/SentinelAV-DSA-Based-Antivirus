@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include "signatureDB.h"
 #include "scanner.h"
 #include "report.h"
@@ -7,64 +8,81 @@ using namespace std;
 
 int main() {
     cout << "=================================" << endl;
-    cout << "SentinelAV - Deliverable 2" << endl;
-    cout << "Skeleton with DSA Implementation Plan" << endl;
+    cout << "   SentinelAV - Deliverable 3" << endl;
+    cout << "   Real File Scanning Demo" << endl;
     cout << "=================================" << endl << endl;
     
-    // ===== DEMO 1: IMPLEMENTED - Linked Lists & Pointers (Week 1-2, 4-5) =====
-    cout << "[DEMO 1] IMPLEMENTED: Linked Lists + Pointers (Week 4-5)" << endl;
-    cout << "---" << endl;
+    // PART 1: Load virus database using ADVANCED method
+    cout << "========== PART 1: LOADING VIRUS DATABASE ==========" << endl;
     SignatureDB sigDB;
-    sigDB.loadSignatures("data/virus_signatures.txt");
+    
+    // Use the ADVANCED loading method (with Trie, Hash Table, Bloom Filter)
+    sigDB.loadSignaturesAdvanced("../data/virus_signatures.txt");
+    
+    cout << "\nTotal signatures loaded: " << sigDB.getSignatureCount() << endl;
     sigDB.displayImplementationStatus();
     cout << endl;
     
-    // ===== DEMO 2: IMPLEMENTED - Linear Search & Recursion (Week 4, 7) =====
-    cout << "[DEMO 2] IMPLEMENTED: Linear Search + Recursion (Week 4 + 7)" << endl;
-    cout << "---" << endl;
-    string testPattern = "malware_pattern_001";
-    bool found = sigDB.searchSignature(testPattern);
-    cout << "Searching for '" << testPattern << "': " << (found ? "FOUND" : "NOT FOUND") << endl;
-    cout << "Total signatures: " << sigDB.getSignatureCount() << endl << endl;
-    
-    // ===== DEMO 3: IMPLEMENTED - Queues (Week 6) =====
-    cout << "[DEMO 3] IMPLEMENTED: Queues (Week 6)" << endl;
-    cout << "---" << endl;
+    // PART 2: Prepare scanner and report
     Scanner scanner;
-    scanner.scanFile("sample_input.txt", sigDB);
+    Report report;
+    
+    // PART 3: List of ACTUAL FILES to scan
+    vector<string> filesToScan = {
+        "../data/sample_input.txt",
+        "../data/infected_document.txt",
+        "../data/suspicious_email.txt",
+        "../data/clean_file.txt",
+        "../data/heavily_infected.txt"
+    };
+    
+    cout << "========== PART 2: SCANNING FILES ==========" << endl;
+    cout << "Files to scan: " << filesToScan.size() << endl << endl;
+    
+    // PART 4: Scan each ACTUAL file
+    for (const string& filename : filesToScan) {
+        // REAL FILE SCANNING
+        scanner.scanFile(filename, sigDB);
+        
+        // Get ACTUAL threat count from detection queue
+        int threatsFound = scanner.getLastFileThreatCount();
+        bool isInfected = (threatsFound > 0);
+        
+        // Extract just filename (not full path)
+        size_t lastSlash = filename.find_last_of("/\\");
+        string shortName = (lastSlash != string::npos) 
+                          ? filename.substr(lastSlash + 1) 
+                          : filename;
+        
+        // Add REAL results to report
+        report.addResult(ScanResult{shortName, threatsFound, isInfected});
+        
+        cout << "---" << endl;
+    }
+    
     scanner.displayImplementationStatus();
     cout << endl;
     
-    // ===== DEMO 4: IMPLEMENTED - Sorting (Week 8) =====
-    cout << "[DEMO 4] IMPLEMENTED: Sorting - Bubble Sort (Week 8)" << endl;
-    cout << "---" << endl;
+    // PART 5: Display sorted results
+    cout << "========== PART 3: GENERATING REPORT ==========" << endl;
     
-    Report report;
-    report.addResult({"sample_input.txt", 0, false});
-    report.addResult({"test_file_1.txt", 3, true});
-    report.addResult({"test_file_2.txt", 1, true});
-    
+    // Sort by threat level
     report.sortByThreatLevel();
     report.displayResults();
+    
     report.displayImplementationStatus();
     
-    cout << endl << "=================================" << endl;
-    cout << "D2 SKELETON COMPLETE" << endl;
+    // Final summary
+    cout << "\n=================================" << endl;
+    cout << "  SCAN COMPLETE!" << endl;
     cout << "=================================" << endl;
-    cout << "\nD2 IMPLEMENTED (Week 1-8):" << endl;
-    cout << " Pointers (Week 1-2)" << endl;
-    cout << " Linked Lists (Week 4-5)" << endl;
-    cout << " Linear Search (Week 4)" << endl;
-    cout << " Recursion (Week 7)" << endl;
-    cout << " Queues (Week 6)" << endl;
-    cout << " Sorting / Bubble Sort (Week 8)" << endl;
-    
-    cout << "\nD3+ DECLARED (TODO):" << endl;
-    cout << " Trie (Week 10)" << endl;
-    cout << " Aho-Corasick Automaton (Week 10 + 13-14)" << endl;
-    cout << " Hash Table (Week 13-14)" << endl;
-    cout << " Bloom Filter (Week 13-14)" << endl;
-    cout << " Priority Queue / Heap (Week 15)" << endl;
+    cout << "\nD3 Features Demonstrated:" << endl;
+    cout << "  ✓ Real file scanning (NOT hardcoded)" << endl;
+    cout << "  ✓ Prefix Trie for pattern storage" << endl;
+    cout << "  ✓ Hash Table for fast lookup" << endl;
+    cout << "  ✓ Bloom Filter for efficiency" << endl;
+    cout << "  ✓ Queue for detection results" << endl;
+    cout << "  ✓ Bubble sort for ranking" << endl;
     
     return 0;
 }
