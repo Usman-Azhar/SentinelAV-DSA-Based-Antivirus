@@ -117,7 +117,7 @@ void SignatureDB::loadSignaturesAdvanced(const string &filename)
 
     file.close();
 
-    cout << "\n[SignatureDB] ✓ Successfully loaded " << count << " signatures" << endl;
+    cout << "\n[SignatureDB] Successfully loaded " << count << " signatures" << endl;
     cout << "[SignatureDB] All data structures populated:" << endl;
 
     // Display statistics for each structure
@@ -201,12 +201,12 @@ bool SignatureDB::searchWithTrie(const string &pattern) const
 void SignatureDB::displayImplementationStatus() const
 {
     cout << "\n[SignatureDB] Implementation Status:" << endl;
-    cout << "  ✓ D2: Linked List - IMPLEMENTED" << endl;
-    cout << "  ✓ D2: Linear Search - IMPLEMENTED" << endl;
-    cout << "  ✓ D3: Prefix Trie - IMPLEMENTED" << endl;
-    cout << "  ✓ D3: Hash Table - IMPLEMENTED" << endl;
-    cout << "  ✓ D3: Bloom Filter - IMPLEMENTED" << endl;
-    cout << "  ✓ D3: Signature Metadata - IMPLEMENTED" << endl;
+    cout << "  D2: Linked List - IMPLEMENTED" << endl;
+    cout << "  D2: Linear Search - IMPLEMENTED" << endl;
+    cout << "  D3: Prefix Trie - IMPLEMENTED" << endl;
+    cout << "  D3: Hash Table - IMPLEMENTED" << endl;
+    cout << "  D3: Bloom Filter - IMPLEMENTED" << endl;
+    cout << "  D3: Signature Metadata - IMPLEMENTED" << endl;
 }
 
 // Destructor
