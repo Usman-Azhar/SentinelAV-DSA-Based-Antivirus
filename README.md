@@ -459,7 +459,7 @@ For questions or discussions about the project:
 |---------|-------|
 | **Usman Azhar** | [GitHub](https://github.com/Usman-Azhar) \| Project Lead |
 | **Reyan Kashif** | [GitHub](https://github.com/Reyan-kashif) \| Algorithm Expert |
-| **Malik Abdullah** | [GitHub](https://github. com/Abdullah-Malik) \| DSA Specialist |
+| **Malik Abdullah** | [GitHub](https://github.com/abdullahmalik2k5-cyber) \| DSA Specialist |
 
 ---
 
