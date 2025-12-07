@@ -457,9 +457,9 @@ For questions or discussions about the project:
 
 | Contact | Links |
 |---------|-------|
-| **Usman Azhar** | [GitHub](https://github.com/Usman-Azhar) \| Project Lead |
-| **Reyan Kashif** | [GitHub](https://github.com/Reyan-kashif) \| Algorithm Expert |
-| **Malik Abdullah** | [GitHub](https://github.com/abdullahmalik2k5-cyber) \| DSA Specialist |
+| **Usman Azhar** | [GitHub](https://github.com/Usman-Azhar) \|
+| **Reyan Kashif** | [GitHub](https://github.com/Reyan-kashif) \|
+| **Malik Abdullah** | [GitHub](https://github.com/abdullahmalik2k5-cyber) \|
 
 ---
 
