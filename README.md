@@ -45,7 +45,7 @@ A production-inspired C++ antivirus prototype that demonstrates practical applic
 SentinelAV is an educational project designed to scan files and identify potential threats by matching file content against a database of known virus signatures. It demonstrates how efficient data structures and algorithms form the backbone of modern security systems.
 
 **Language:** C++ (99.7%), C (0.3%)  
-**Status:** Active Development (Deliverable 3 in progress)
+**Status:** Active Development (Deliverable 4 Completed)
 
 ---
 
