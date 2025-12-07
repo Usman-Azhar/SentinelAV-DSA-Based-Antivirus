@@ -33,7 +33,7 @@ A production-inspired C++ antivirus prototype that demonstrates practical applic
         <b>Malik Abdullah</b>
       </a><br/>
       <sub>Data Structures & Testing Lead</sub><br/>
-      <a href="https://github.com/Abdullah-Malik">@Abdullah-Malik</a>
+      <a href="https://github.com/abdullahmalik2k5-cyber">@Abdullah-Malik</a>
     </td>
   </tr>
 </table>
