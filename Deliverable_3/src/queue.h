@@ -6,86 +6,99 @@
 
 using namespace std;
 
-template <typename T> // Template so the queue works with any data type
+// QueueNode: Node for queue's linked list implementation
+// Similar to LinkedList Node but used specifically for FIFO operations
+template <typename T>
 struct QueueNode
-{                    // Structure representing a single node in the queue
-    T data;          // Data stored in the node
-    QueueNode *next; // Pointer to the next node in the queue
+{
+    T data;          // Stores detection result or any data type
+    QueueNode *next; // Points to next node in queue
 
-    QueueNode(T val) : data(val), next(nullptr) {} // Node constructor
+    QueueNode(T val) : data(val), next(nullptr) {}
 };
 
+// Queue: FIFO (First In First Out) data structure
+// Used by: Scanner to store detection results in order they're found
+// Real-world analogy: Line at a store - first person in is first served
 template <typename T>
-
 class Queue
 {
 private:
-    QueueNode<T> *front; // Pointer to the first element in the queue
-    QueueNode<T> *rear;  // Pointer to the last element in the queue
-    int size;            // Number of elements currently in the queue
-public:
-    Queue() : front(nullptr), rear(nullptr), size(0) {}; // Queue constructor (initially empty)
+    QueueNode<T> *front; // Points to first element (where we dequeue from)
+    QueueNode<T> *rear;  // Points to last element (where we enqueue to)
+    int size;            // Current number of elements
 
-    // Insert a new value at the end of the queue
+public:
+    Queue() : front(nullptr), rear(nullptr), size(0) {} // Start with empty queue
+
+    // Enqueue: Add element to back of queue
+    // Process: Create node → Link to rear → Update rear pointer
     void enqueue(T val)
     {
-        QueueNode<T> *newNode = new QueueNode<T>(val); // Create a new node with given value
+        QueueNode<T> *newNode = new QueueNode<T>(val);
+
         if (isEmpty())
-        {                           // If queue is empty
-            front = rear = newNode; // Both front and rear point to the new node
+        {
+            // Special case: First element, front and rear both point to it
+            front = rear = newNode;
         }
         else
         {
-            rear->next = newNode; // Link last node to the new node
-            rear = newNode;       // Update rear pointer
+            // General case: Add to end, update rear
+            rear->next = newNode;
+            rear = newNode;
         }
-        size++; // Increase queue size
+        size++;
     }
 
-    // Remove and return the front element of the queue
+    // Dequeue: Remove and return element from front of queue
+    // Process: Save value → Update front → Delete old node → Return value
     T dequeue()
     {
         if (isEmpty())
-        { // Cannot dequeue from empty queue
+        {
             throw runtime_error("Queue is empty!");
         }
-        T val = front->data;        // Store the front element
-        QueueNode<T> *temp = front; // Temporary pointer to the node being removed
-        front = front->next;        // Move front pointer to next element
-        delete temp;                // Delete old front node
-        size--;                     // Decrease queue size
-        return val;                 // Return removed value
+
+        T val = front->data;        // Save the data before deleting node
+        QueueNode<T> *temp = front; // Keep pointer to node we'll delete
+        front = front->next;        // Move front to next element
+        delete temp;                // Free memory of old front
+        size--;
+
+        return val;
     }
 
-    // Check if the queue is empty
+    // Check if queue is empty
     bool isEmpty() const
     {
         return size == 0;
     }
 
-    // Return the number of elements in the queue
     int getSize() const
     {
         return size;
     }
 
-    // Return the front value without removing it
+    // Peek: Look at front element without removing it
+    // Useful when you want to check what's next without processing it yet
     T peek() const
     {
         if (isEmpty())
-        { // Cannot peek in an empty queue
+        {
             throw runtime_error("Queue is empty!");
         }
-        return front->data; // Return front value
+        return front->data;
     }
 
-    // Destructor to free all nodes when queue goes out of scope
+    // Destructor: Clean up all nodes
     ~Queue()
     {
         while (!isEmpty())
-        {              // Remove all items
-            dequeue(); // Dequeue repeatedly to delete each node
+        {
+            dequeue(); // Remove each element, freeing its memory
         }
-    };
+    }
 };
+
 #endif
