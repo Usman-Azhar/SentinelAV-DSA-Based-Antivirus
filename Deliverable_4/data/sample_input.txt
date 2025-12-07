@@ -1,0 +1,16 @@
+Welcome to the sample document for testing.
+This file contains normal text and some hidden threats.
+
+Section 1: Introduction
+This is a harmless paragraph with general information.
+Everything looks safe here, nothing suspicious.
+
+Section 2: Hidden Threats
+Wait! There's a malware_pattern_001 embedded in this line.
+Another line contains trojan_signature_xyz which is dangerous.
+The system should detect virus_code_abc123 in this sentence.
+
+Section 3: Conclusion
+The rest of this file is clean and safe.
+No more threats beyond this point.
+End of sample document.
