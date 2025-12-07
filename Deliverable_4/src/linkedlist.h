@@ -6,76 +6,82 @@
 
 using namespace std;
 
-// Node structure - each node holds one piece of data
+// Node: Building block of linked list - each node holds data + pointer to next
 template <typename T>
 struct Node
 {
-    T data;     // The actual data (in our case, virus signature string)
-    Node *next; // Pointer to the next node in the list
+    T data;     // Stores the actual value (string, Signature, etc.)
+    Node *next; // Points to the next node in the chain (nullptr if last)
 
-    // Constructor - creates a new node with given value
+    // Constructor: Initialize node with data, next starts as nullptr
     Node(T val) : data(val), next(nullptr) {}
 };
 
-// LinkedList class - manages a chain of nodes
+// LinkedList: Dynamic list that grows/shrinks as needed
+// Used by: SignatureDB (D2), HashTable (for chaining)
+// Advantage: Dynamic size, easy insertion
+// Disadvantage: Slow search O(n)
 template <typename T>
 class LinkedList
 {
 private:
-    Node<T> *head; // Points to the first node (start of list)
-    int size;      // Tracks how many nodes we have
+    Node<T> *head; // Points to first node (nullptr if empty)
+    int size;      // Tracks total number of nodes
 
 public:
-    // Constructor - creates an empty list
+    // Constructor: Create empty list
     LinkedList() : head(nullptr), size(0) {}
 
-    // Insert at the end of the list
+    // Insert at end: Traverse to last node and append new node
+    // Time complexity: O(n) due to traversal
     void insert(T value)
     {
-        Node<T> *newNode = new Node<T>(value); // Create new node
+        Node<T> *newNode = new Node<T>(value);
 
         if (head == nullptr)
         {
-            // If list is empty, new node becomes the head
+            // Special case: Empty list, new node becomes head
             head = newNode;
         }
         else
         {
-            // Traverse to the end and add new node there
+            // General case: Walk to end, then link new node
             Node<T> *current = head;
             while (current->next != nullptr)
             {
-                current = current->next; // Move to next node
+                current = current->next;
             }
-            current->next = newNode; // Link last node to new node
+            current->next = newNode;
         }
         size++;
     }
 
-    // Linear search - finds if a value exists in the list
+    // Linear search: Check each node one by one
+    // Time complexity: O(n) - worst case checks all nodes
+    // Used by: Old D2 virus scanning method
     bool search(const T &value) const
     {
         Node<T> *current = head;
 
-        // Walk through the list one node at a time
         while (current != nullptr)
         {
             if (current->data == value)
             {
-                return true; // Found it!
+                return true; // Found!
             }
-            current = current->next; // Move to next node
+            current = current->next;
         }
-        return false; // Not found after checking all nodes
+        return false; // Reached end without finding
     }
 
-    // Recursive search - alternative way to search
+    // Recursive search: Alternative approach using function calls
+    // Demonstrates recursion concept but same O(n) complexity
     bool searchRecursive(const T &value) const
     {
         return searchHelper(head, value);
     }
 
-    // Display all elements in the list
+    // Display: Print all elements in order
     void display() const
     {
         if (head == nullptr)
@@ -98,19 +104,18 @@ public:
         cout << endl;
     }
 
-    // Get the number of elements
     int getSize() const
     {
         return size;
     }
 
-    // Check if list is empty
     bool isEmpty() const
     {
         return head == nullptr;
     }
 
-    // Get element at specific position (for iteration)
+    // Get element at specific position (for iteration in HashTable)
+    // Time complexity: O(n) for position n
     T getAt(int index) const
     {
         if (index < 0 || index >= size)
@@ -126,7 +131,8 @@ public:
         return current->data;
     }
 
-    // Destructor - cleans up all nodes to prevent memory leaks
+    // Destructor: Clean up all nodes to prevent memory leaks
+    // Called automatically when LinkedList object is destroyed
     ~LinkedList()
     {
         Node<T> *current = head;
@@ -134,27 +140,27 @@ public:
         {
             Node<T> *temp = current;
             current = current->next;
-            delete temp; // Free memory for each node
+            delete temp; // Free memory for this node
         }
     }
 
 private:
-    // Helper function for recursive search
+    // Helper for recursive search
+    // Base cases: (1) nullptr = not found, (2) match = found
+    // Recursive case: Check rest of list
     bool searchHelper(Node<T> *node, const T &value) const
     {
-        // Base case: reached end of list
         if (node == nullptr)
         {
-            return false;
+            return false; // Base: reached end
         }
 
-        // Base case: found the value
         if (node->data == value)
         {
-            return true;
+            return true; // Base: found match
         }
 
-        // Recursive case: search in the rest of the list
+        // Recursive: search remaining nodes
         return searchHelper(node->next, value);
     }
 };
