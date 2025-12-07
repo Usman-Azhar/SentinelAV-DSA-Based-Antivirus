@@ -28,7 +28,7 @@ A production-inspired C++ antivirus prototype that demonstrates practical applic
       <a href="https://github.com/Reyan-kashif">@Reyan-kashif</a>
     </td>
     <td align="center">
-      <a href="https://github.com/Abdullah-Malik">
+      <a href="https://github.com/abdullahmalik2k5-cyber">
         <img src="https://avatars.githubusercontent.com/u/50669245?v=4" width="100px;" alt="Malik Abdullah"/><br/>
         <b>Malik Abdullah</b>
       </a><br/>
