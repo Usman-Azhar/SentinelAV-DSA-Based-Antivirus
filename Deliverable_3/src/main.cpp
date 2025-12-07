@@ -10,7 +10,7 @@ int main()
 {
     cout << "=================================" << endl;
     cout << "   SentinelAV - Deliverable 3" << endl;
-    cout << "   Real File Scanning Demo" << endl;
+    cout << "       Real File Scanning    " << endl;
     cout << "=================================" << endl
          << endl;
 
@@ -83,7 +83,7 @@ int main()
     cout << "=================================" << endl;
 
     cout << "\nD3 Features Demonstrated:" << endl;
-    cout << "  Real file scanning (NOT hardcoded)" << endl;
+    cout << "  Real file scanning" << endl;
     cout << "  Prefix Trie for pattern storage" << endl;
     cout << "  Hash Table for fast lookup" << endl;
     cout << "  Bloom Filter for efficiency" << endl;

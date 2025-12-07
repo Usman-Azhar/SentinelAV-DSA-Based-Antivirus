@@ -51,15 +51,6 @@ public:
         return false;
     }
 
-    // Signature getSignature(const string& pattern) const {
-    //     int index = hashFunction(pattern);
-    //     for (int i = 0; i < table[index].getSize(); i++) {
-    //         if (table[index].getAt(i).pattern == pattern) {
-    //             return table[index].getAt(i);
-    //         }
-    //     }
-    //     return Signature();  // Return empty signature if not found
-    // }
     Signature *getSignature(const string &pattern)
     {
         int index = hashFunction(pattern);

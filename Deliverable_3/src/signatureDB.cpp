@@ -111,7 +111,7 @@ void SignatureDB::loadSignaturesAdvanced(const string &filename)
         // Progress indicator every 5 signatures
         if (count % 5 == 0)
         {
-            cout << "  [SignatureDB] Loaded " << count << " signatures..." << endl;
+            cout << "[SignatureDB] Loaded " << count << " signatures..." << endl;
         }
     }
 
@@ -121,11 +121,11 @@ void SignatureDB::loadSignaturesAdvanced(const string &filename)
     cout << "[SignatureDB] All data structures populated:" << endl;
 
     // Display statistics for each structure
-    cout << "\n--- Data Structure Statistics ---" << endl;
-    signatureTrie.displayStats();
-    bloomFilter.displayStats();
-    hashTable.displayStats();
-    cout << "--------------------------------" << endl;
+    // cout << "\n--- Data Structure Statistics ---" << endl;
+    // signatureTrie.displayStats();
+    // bloomFilter.displayStats();
+    // hashTable.displayStats();
+    // cout << "--------------------------------" << endl;
 }
 
 // D3: Add signature to ALL advanced data structures
@@ -162,19 +162,6 @@ bool SignatureDB::searchSignatureFast(const string &pattern) const
     // Step 3: Trie confirmation (O(m) where m = pattern length)
     return signatureTrie.search(pattern);
 }
-
-// D3: Get full signature details
-// Signature* SignatureDB::getSignatureDetails(const string& pattern) {
-//     // Try hash table first (fastest)
-//     Signature sig = hashTable.getSignature(pattern);
-//     if (!sig.pattern.empty()) {
-//         static Signature result = sig;
-//         return &result;
-//     }
-
-//     // Try trie as backup
-//     return signatureTrie.getSignature(pattern);
-// }
 
 // D3: Get full signature details
 Signature *SignatureDB::getSignatureDetails(const string &pattern)
