@@ -457,9 +457,9 @@ For questions or discussions about the project:
 
 | Contact | Links |
 |---------|-------|
-| **Usman Azhar** | [GitHub](https://github.com/Usman-Azhar) \|
-| **Reyan Kashif** | [GitHub](https://github.com/Reyan-kashif) \|
-| **Malik Abdullah** | [GitHub](https://github.com/abdullahmalik2k5-cyber) \|
+| **Usman Azhar** | [GitHub](https://github.com/Usman-Azhar) \
+| **Reyan Kashif** | [GitHub](https://github.com/Reyan-kashif) \
+| **Malik Abdullah** | [GitHub](https://github.com/abdullahmalik2k5-cyber) \
 
 ---
 
