@@ -469,7 +469,7 @@ For questions or discussions about the project:
 |-----------|--------|-------------|
 | **Deliverable 1** | ✅ Complete | Project planning and DSA concept identification |
 | **Deliverable 2** | ✅ Complete | Core implementation with queue and linked lists |
-| **Deliverable 3** | 🔄 In Progress | Optimization and advanced features |
+| **Deliverable 3 & 4** | ✅ Complete | Optimization and advanced features |
 
 ---
 
