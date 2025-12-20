@@ -19,7 +19,7 @@
         <img src="https://avatars.githubusercontent.com/u/207247821?v=4" width="100px;" alt="Reyan Kashif"/><br/>
         <b>Reyan Kashif</b>
       </a><br/>
-      <sub>Algorithm Specialist</sub><br/>
+      <sub>Core Developer & Algorithm Specialist</sub><br/>
       <a href="https://github.com/Reyan-kashif">@Reyan-kashif</a>
     </td>
     <td align="center">
@@ -27,7 +27,7 @@
         <img src="https://avatars.githubusercontent.com/u/236664026?v=4" width="100px;" alt="Malik Abdullah"/><br/>
         <b>Malik Abdullah</b>
       </a><br/>
-      <sub>Core Developer & Data Structure Specialist</sub><br/>
+      <sub>Data Structures & Testing Lead</sub><br/>
       <a href="https://github.com/abdullahmalik2k5-cyber">@Abdullah-Malik</a>
     </td>
   </tr>
