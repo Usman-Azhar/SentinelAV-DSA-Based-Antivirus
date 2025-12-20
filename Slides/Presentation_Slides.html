@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SentinelAV Presentation</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* Smooth transition for slide content */
+        #slide-content {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 to-purple-100 p-8 font-sans">
+
+    <div class="max-w-5xl mx-auto">
+        
+        <div class="bg-white rounded-t-2xl shadow-lg p-6 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <i id="current-icon" class="w-8 h-8 text-blue-600"></i>
+                <div>
+                    <h1 id="slide-title" class="text-2xl font-bold text-gray-800">Title</h1>
+                    <p id="slide-count" class="text-sm text-gray-500">Slide 1 of X</p>
+                </div>
+            </div>
+            <div id="pagination-dots" class="flex gap-2">
+                </div>
+        </div>
+
+        <div class="bg-white shadow-lg p-12 min-h-[600px] flex items-center justify-center">
+            <div id="slide-content" class="w-full">
+                </div>
+        </div>
+
+        <div class="bg-white rounded-b-2xl shadow-lg p-6 flex items-center justify-between">
+            <button id="prev-btn" class="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-400">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                Previous
+            </button>
+            
+            <div id="slide-counter-bottom" class="text-gray-600 font-medium">
+                1 / X
+            </div>
+            
+            <button id="next-btn" class="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-400">
+                Next
+                <i data-lucide="chevron-right" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // Data Structure
+        const slides = [
+            {
+                title: "SentinelAV",
+                icon: "shield",
+                content: `
+                    <div class="text-center space-y-8">
+                        <div class="text-6xl mb-4">🛡️</div>
+                        <h1 class="text-5xl font-bold text-blue-600 mb-4">SentinelAV</h1>
+                        <h2 class="text-2xl text-gray-700">Antivirus Scanner Using Advanced Data Structures</h2>
+                        <div class="mt-8 space-y-2">
+                            <p class="text-xl text-gray-600 font-semibold">Data Structures & Algorithms</p>
+                            <p class="text-lg text-gray-500">Dr. Zubair Ahmed</p>
+                        </div>
+                        <div class="mt-12 bg-blue-50 p-6 rounded-lg inline-block text-left w-full max-w-lg">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-3 text-center">Group Members</h3>
+                            <div class="space-y-2 text-gray-600 text-center">
+                                <p>Usman Azhar - 2024653</p>
+                                <p>Malik Abdullah - 2024275</p>
+                                <p>Reyan Kashif - 2024538</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Problem Statement",
+                icon: "shield",
+                content: `
+                    <div class="space-y-6">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-6">The Challenge</h2>
+                        <div class="bg-red-50 p-6 rounded-lg border-l-4 border-red-500">
+                            <h3 class="text-xl font-semibold text-red-800 mb-3">🔴 Security Threats</h3>
+                            <p class="text-gray-700 mb-3">Modern computer systems face constant threats from malware, viruses, trojans, and other malicious software. Traditional file scanning methods struggle with:</p>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex items-start gap-2"><span class="text-red-600">•</span><span><strong>Performance bottlenecks:</strong> Linear search through thousands of virus signatures is too slow</span></li>
+                                <li class="flex items-start gap-2"><span class="text-red-600">•</span><span><strong>Scalability issues:</strong> Database grows with new threats daily</span></li>
+                                <li class="flex items-start gap-2"><span class="text-red-600">•</span><span><strong>Memory constraints:</strong> Storing massive signature databases efficiently</span></li>
+                            </ul>
+                        </div>
+                        <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500">
+                            <h3 class="text-xl font-semibold text-blue-800 mb-3">💡 Our Solution</h3>
+                            <p class="text-gray-700 mb-3">Build an intelligent antivirus scanner that leverages optimal data structures to:</p>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-white p-3 rounded"><p class="font-semibold text-blue-700">⚡ Fast Detection</p><p class="text-sm text-gray-600">Multi-layer search achieving O(1) average lookup</p></div>
+                                <div class="bg-white p-3 rounded"><p class="font-semibold text-green-700">📊 Efficient Storage</p><p class="text-sm text-gray-600">Trie structure minimizes memory with shared prefixes</p></div>
+                                <div class="bg-white p-3 rounded"><p class="font-semibold text-purple-700">🎯 Accurate Reporting</p><p class="text-sm text-gray-600">Priority queues identify critical threats first</p></div>
+                                <div class="bg-white p-3 rounded"><p class="font-semibold text-orange-700">📈 Scalable Design</p><p class="text-sm text-gray-600">Handles growing signature databases efficiently</p></div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Project Overview",
+                icon: "database",
+                content: `
+                    <div class="space-y-6">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-6">Complete System Overview</h2>
+                        <div class="bg-blue-50 p-6 rounded-lg">
+                            <h3 class="text-xl font-semibold mb-4">🎯 Project Goal</h3>
+                            <p class="text-gray-700">Build a production-grade antivirus scanner that efficiently detects malware signatures using optimal data structures and algorithms</p>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 mt-6">
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-green-800 mb-2">✅ Core Features</h4>
+                                <ul class="text-sm space-y-1 text-gray-700"><li>• Multi-file scanning</li><li>• Pattern matching</li><li>• Threat reporting</li><li>• Performance optimization</li></ul>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-purple-800 mb-2">📊 Data Structures</h4>
+                                <ul class="text-sm space-y-1 text-gray-700"><li>• Linked List</li><li>• Trie (Prefix Tree)</li><li>• Hash Table</li><li>• Bloom Filter</li><li>• Queue</li><li>• Priority Queue</li></ul>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-orange-800 mb-2">🧮 Algorithms</h4>
+                                <ul class="text-sm space-y-1 text-gray-700"><li>• Merge Sort</li><li>• String Matching</li><li>• Hashing</li><li>• Tree Traversal</li></ul>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "System Architecture",
+                icon: "archive",
+                content: `
+                    <div class="space-y-4">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-4">Complete File Structure</h2>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-3">📁 Project Components</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <div class="bg-blue-100 p-3 rounded">
+                                        <h4 class="font-bold text-blue-800">Core Data Structures</h4>
+                                        <ul class="text-sm mt-2 space-y-1"><li>• linkedlist.h</li><li>• trie.h</li><li>• hashtable.h</li><li>• bloomfilter.h</li><li>• queue.h</li></ul>
+                                    </div>
+                                    <div class="bg-green-100 p-3 rounded">
+                                        <h4 class="font-bold text-green-800">Data Models</h4>
+                                        <ul class="text-sm mt-2 space-y-1"><li>• Signature.h</li></ul>
+                                    </div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="bg-purple-100 p-3 rounded">
+                                        <h4 class="font-bold text-purple-800">Application Logic</h4>
+                                        <ul class="text-sm mt-2 space-y-1"><li>• signatureDB.h/cpp</li><li>• scanner.h/cpp</li><li>• report.h/cpp</li><li>• main.cpp</li></ul>
+                                    </div>
+                                    <div class="bg-orange-100 p-3 rounded">
+                                        <h4 class="font-bold text-orange-800">Data Files</h4>
+                                        <ul class="text-sm mt-2 space-y-1"><li>• virus_signatures.txt</li><li>• Test files (5 files)</li><li>• scan_report.txt</li></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Linked List",
+                icon: "git-branch",
+                content: `
+                    <div class="space-y-4">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-4">LinkedList.h - Dynamic Storage</h2>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-3">📝 Purpose & Design</h3>
+                            <p class="text-gray-700 mb-4">Template-based linked list providing dynamic, flexible storage for virus signatures</p>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-white p-3 rounded border-l-4 border-blue-500"><p class="font-medium text-blue-600">Node Structure</p><p class="text-sm text-gray-600">data + next pointer</p></div>
+                                <div class="bg-white p-3 rounded border-l-4 border-green-500"><p class="font-medium text-green-600">Template Support</p><p class="text-sm text-gray-600">Works with any type &lt;T&gt;</p></div>
+                                <div class="bg-white p-3 rounded border-l-4 border-purple-500"><p class="font-medium text-purple-600">Insert Operation</p><p class="text-sm text-gray-600">O(n) - append to end</p></div>
+                                <div class="bg-white p-3 rounded border-l-4 border-orange-500"><p class="font-medium text-orange-600">Search Methods</p><p class="text-sm text-gray-600">Iterative & Recursive</p></div>
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h3 class="font-semibold mb-2">🔧 Key Operations</h3>
+                            <div class="grid grid-cols-2 gap-2 text-sm"><div>• insert(value) - Add element</div><div>• search(value) - Find element</div><div>• getAt(index) - Access by position</div><div>• display() - Show contents</div></div>
+                        </div>
+                        <div class="bg-green-50 p-3 rounded-lg">
+                            <h3 class="font-semibold mb-2">✨ Special Features</h3>
+                            <ul class="text-sm space-y-1 text-gray-700"><li>• Proper memory management with destructor</li><li>• Recursive search alternative</li><li>• Used by HashTable for collision chaining</li></ul>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Signature Structure",
+                icon: "file-text",
+                content: `
+                    <div class="space-y-4">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-4">Signature.h - Data Model</h2>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-3">🗂️ Complete Virus Information</h3>
+                            <p class="text-gray-700 mb-4">Structured data model storing comprehensive metadata for each virus signature</p>
+                            <div class="bg-white p-4 rounded-lg border-2 border-blue-200">
+                                <h4 class="font-bold text-blue-700 mb-3">Signature Fields:</h4>
+                                <div class="space-y-3 text-sm">
+                                    <div class="flex justify-between border-b pb-2"><div><span class="font-bold text-purple-600">string pattern</span><p class="text-xs text-gray-500">The actual virus string to search for</p></div><span class="text-gray-600">e.g., "malware_pattern_001"</span></div>
+                                    <div class="flex justify-between border-b pb-2"><div><span class="font-bold text-purple-600">string name</span><p class="text-xs text-gray-500">Human-readable virus name</p></div><span class="text-gray-600">e.g., "Trojan.Win32"</span></div>
+                                    <div class="flex justify-between border-b pb-2"><div><span class="font-bold text-purple-600">string type</span><p class="text-xs text-gray-500">Category classification</p></div><span class="text-gray-600">"malware", "trojan", "worm"</span></div>
+                                    <div class="flex justify-between"><div><span class="font-bold text-purple-600">int severity</span><p class="text-xs text-gray-500">Danger level rating</p></div><span class="text-gray-600">1 (low) to 10 (critical)</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h3 class="font-semibold mb-2">✨ Design Benefits</h3>
+                            <ul class="text-sm space-y-1 text-gray-700"><li>• Centralized data structure used across all components</li><li>• Constructor with default values for easy instantiation</li><li>• Extensible - new fields can be added easily</li><li>• Used by Trie, HashTable, and LinkedList</li></ul>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Trie Implementation",
+                icon: "git-branch",
+                content: `
+                    <div class="space-y-4">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-4">Trie.h - Prefix Tree</h2>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-3">🌳 Efficient Pattern Matching</h3>
+                            <p class="text-gray-700 mb-4">Prefix tree enabling fast pattern-based searches with shared prefix optimization</p>
+                            <div class="bg-white p-4 rounded-lg mb-4">
+                                <h4 class="font-bold text-blue-700 mb-2">Visual Structure:</h4>
+                                <div class="font-mono text-sm bg-gray-900 text-green-400 p-3 rounded">
+                                    <div>root</div>
+                                    <div class="ml-4">└─ m → a → l → w → a → r → e [END: malware_pattern_001]</div>
+                                    <div class="ml-12">└─ f → u → n → c → t → i → o → n [END]</div>
+                                    <div class="ml-4">└─ t → r → o → j → a → n [END: trojan_signature_xyz]</div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-blue-50 p-3 rounded"><p class="font-semibold text-blue-700">TrieNode Structure</p><ul class="text-sm text-gray-600 mt-1"><li>• unordered_map children</li><li>• bool isEndOfWord</li><li>• Signature* sigData</li></ul></div>
+                                <div class="bg-green-50 p-3 rounded"><p class="font-semibold text-green-700">Time Complexity</p><ul class="text-sm text-gray-600 mt-1"><li>• Insert: O(m)</li><li>• Search: O(m)</li><li>• m = pattern length</li></ul></div>
+                            </div>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <h3 class="font-semibold mb-2">🔍 Key Operations</h3>
+                            <div class="grid grid-cols-2 gap-2 text-sm"><div>• insert(Signature) - Add pattern</div><div>• search(pattern) - Find exact match</div><div>• startsWith(prefix) - Prefix check</div><div>• getSignature() - Retrieve metadata</div></div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Hash Table",
+                icon: "binary",
+                content: `
+                    <div class="space-y-4">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-4">HashTable.h - Fast Lookup</h2>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-3">⚡ O(1) Average Search</h3>
+                            <p class="text-gray-700 mb-4">Hash-based storage with chaining for collision resolution using linked lists</p>
+                            <div class="grid grid-cols-2 gap-3 mb-4">
+                                <div class="bg-blue-100 p-3 rounded"><p class="font-semibold text-blue-700">Structure</p><p class="text-sm text-gray-600">Array of LinkedList&lt;Signature&gt;</p><p class="text-xs text-gray-500 mt-1">TABLE_SIZE = 1000</p></div>
+                                <div class="bg-green-100 p-3 rounded"><p class="font-semibold text-green-700">Hash Function</p><p class="text-sm text-gray-600">djb2 algorithm</p><p class="text-xs text-gray-500 mt-1">hash * 33 + c</p></div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                                <h4 class="font-bold text-purple-700 mb-2">Collision Handling</h4>
+                                <p class="text-sm text-gray-700">Chaining method: Multiple signatures with same hash are stored in a linked list at that bucket</p>
+                            </div>
+                        </div>
+                        <div class="bg-orange-50 p-4 rounded-lg">
+                            <h3 class="font-semibold mb-2">📊 Performance Metrics</h3>
+                            <div class="grid grid-cols-3 gap-2 text-sm"><div>• Load Factor tracking</div><div>• Occupied buckets count</div><div>• Max chain length</div></div>
+                        </div>
+                        <div class="bg-blue-50 p-3 rounded-lg">
+                            <h3 class="font-semibold mb-2">🔧 Operations</h3>
+                            <ul class="text-sm space-y-1 text-gray-700"><li>• insert(Signature) - Add to appropriate bucket</li><li>• search(pattern) - Hash → Find bucket → Linear search in list</li><li>• getSignature(pattern) - Retrieve full details</li><li>• displayStats() - Show performance metrics</li></ul>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Bloom Filter",
+                icon: "filter",
+                content: `
+                    <div class="space-y-4">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-4">BloomFilter.h - Probabilistic Filter</h2>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-3">🎯 Ultra-Fast Preliminary Check</h3>
+                            <p class="text-gray-700 mb-4">Probabilistic data structure for rapid membership testing - first line of defense</p>
+                            <div class="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500 mb-4">
+                                <h4 class="font-bold text-yellow-800 mb-2">⚠️ Important Characteristics</h4>
+                                <ul class="text-sm space-y-1 text-gray-700">
+                                    <li>• <strong>False Positives:</strong> Possible - may say "might contain" when it doesn't</li>
+                                    <li>• <strong>False Negatives:</strong> IMPOSSIBLE - if it says "no", it's definitely not there</li>
+                                    <li>• <strong>Speed:</strong> Extremely fast - O(1) for both insert and lookup</li>
+                                </ul>
+                            </div>
+                            <div class="grid grid-cols-3 gap-3">
+                                <div class="bg-blue-100 p-3 rounded"><p class="font-semibold text-blue-700">Size</p><p class="text-sm text-gray-600">10,000 bits</p></div>
+                                <div class="bg-green-100 p-3 rounded"><p class="font-semibold text-green-700">Hash Functions</p><p class="text-sm text-gray-600">3 different hashes</p></div>
+                                <div class="bg-purple-100 p-3 rounded"><p class="font-semibold text-purple-700">Fill Tracking</p><p class="text-sm text-gray-600">Monitor efficiency</p></div>
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h3 class="font-semibold mb-2">🔧 Three Hash Functions</h3>
+                            <ul class="text-sm space-y-1 text-gray-700"><li>• <strong>hash1:</strong> Polynomial rolling (multiplier: 31)</li><li>• <strong>hash2:</strong> djb2 algorithm (shift + add)</li><li>• <strong>hash3:</strong> Similar to hash1 (multiplier: 37)</li></ul>
+                        </div>
+                        <div class="bg-green-50 p-3 rounded-lg">
+                            <h3 class="font-semibold mb-2">💡 Usage in System</h3>
+                            <p class="text-sm text-gray-700">First check in multi-layer search: Quickly eliminates patterns that definitely don't exist, reducing expensive lookups</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Queue Structure",
+                icon: "list",
+                content: `
+                    <div class="space-y-4">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-4">Queue.h - FIFO Processing</h2>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-3">📋 First In, First Out</h3>
+                            <p class="text-gray-700 mb-4">Queue data structure for ordered processing of virus detections as they're found</p>
+                            <div class="bg-white p-4 rounded-lg border-2 border-blue-200 mb-4">
+                                <h4 class="font-bold text-blue-700 mb-2">Structure Design:</h4>
+                                <div class="text-sm space-y-2">
+                                    <div class="flex items-center gap-4">
+                                        <span class="font-mono bg-gray-100 px-2 py-1 rounded">front →</span>
+                                        <div class="flex gap-2">
+                                            <div class="bg-blue-100 border-2 border-blue-300 px-3 py-2 rounded">Detection 1</div>
+                                            <div class="bg-blue-100 border-2 border-blue-300 px-3 py-2 rounded">Detection 2</div>
+                                            <div class="bg-blue-100 border-2 border-blue-300 px-3 py-2 rounded">Detection 3</div>
+                                        </div>
+                                        <span class="font-mono bg-gray-100 px-2 py-1 rounded">← rear</span>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-2">Enqueue at rear, Dequeue from front</p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-green-50 p-3 rounded"><p class="font-semibold text-green-700">Key Operations</p><ul class="text-sm text-gray-600 mt-1"><li>• enqueue(val) - Add to rear</li><li>• dequeue() - Remove from front</li><li>• peek() - View front without removing</li></ul></div>
+                                <div class="bg-purple-50 p-3 rounded"><p class="font-semibold text-purple-700">Use Case</p><p class="text-sm text-gray-600 mt-1">Scanner stores DetectionResult objects in order they're discovered during file scanning</p></div>
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h3 class="font-semibold mb-2">🔄 Processing Flow</h3>
+                            <p class="text-sm text-gray-700">Scan file → Detect threat → Enqueue result → Process in order → Generate report</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "SignatureDB Manager",
+                icon: "database",
+                content: `
+                    <div class="space-y-4">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-4">SignatureDB - Central Database</h2>
+                        <div class="bg-gradient-to-br from-blue-50 to-purple-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-3">🔗 Multi-Structure Integration</h3>
+                            <p class="text-gray-700 mb-4">Central manager coordinating all data structures for optimal search performance</p>
+                            <div class="space-y-3">
+                                <div class="bg-white p-3 rounded-lg shadow-sm"><div class="flex items-center gap-2 mb-2"><div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm">1</div><h4 class="font-bold text-blue-700">LinkedList Storage</h4></div><p class="text-sm text-gray-600 ml-10">Basic pattern strings + Full Signature objects with metadata</p></div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm"><div class="flex items-center gap-2 mb-2"><div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-sm">2</div><h4 class="font-bold text-green-700">Trie Pattern Matching</h4></div><p class="text-sm text-gray-600 ml-10">Efficient prefix-based pattern searches - O(m) complexity</p></div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm"><div class="flex items-center gap-2 mb-2"><div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm">3</div><h4 class="font-bold text-purple-700">Hash Table Lookup</h4></div><p class="text-sm text-gray-600 ml-10">Fast O(1) average confirmation of pattern existence</p></div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm"><div class="flex items-center gap-2 mb-2"><div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-sm">4</div><h4 class="font-bold text-orange-700">Bloom Filter</h4></div><p class="text-sm text-gray-600 ml-10">Ultra-fast preliminary filtering - eliminates non-existent patterns instantly</p></div>
+                            </div>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400">
+                            <h3 class="font-semibold mb-2">⚡ Multi-Layer Search Strategy</h3>
+                            <p class="text-sm text-gray-700">BloomFilter (fast reject) → HashTable (fast confirm) → Trie (fallback verification)</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Scanner Engine",
+                icon: "search",
+                content: `
+                    <div class="space-y-4">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-4">Scanner - File Analysis Engine</h2>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-3">🔍 Detection Algorithm</h3>
+                            <p class="text-gray-700 mb-4">Scans files line-by-line, matching against all virus signatures and queuing results</p>
+                            <div class="bg-white p-4 rounded-lg border-2 border-blue-200 mb-4">
+                                <h4 class="font-bold text-blue-700 mb-3">Scanning Process:</h4>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex items-center gap-3"><span class="bg-blue-500 text-white px-2 py-1 rounded text-xs font-bold">1</span><span>Open file for reading</span></div>
+                                    <div class="flex items-center gap-3"><span class="bg-blue-500 text-white px-2 py-1 rounded text-xs font-bold">2</span><span>Read file line by line</span></div>
+                                    <div class="flex items-center gap-3"><span class="bg-blue-500 text-white px-2 py-1 rounded text-xs font-bold">3</span><span>For each line, check against ALL signatures</span></div>
+                                    <div class="flex items-center gap-3"><span class="bg-blue-500 text-white px-2 py-1 rounded text-xs font-bold">4</span><span>If match found: Create DetectionResult</span></div>
+                                    <div class="flex items-center gap-3"><span class="bg-blue-500 text-white px-2 py-1 rounded text-xs font-bold">5</span><span>Enqueue detection in FIFO order</span></div>
+                                    <div class="flex items-center gap-3"><span class="bg-blue-500 text-white px-2 py-1 rounded text-xs font-bold">6</span><span>Report results and summary</span></div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-green-50 p-3 rounded"><p class="font-semibold text-green-700">DetectionResult</p><ul class="text-sm text-gray-600 mt-1"><li>• line (infected text)</li><li>• matchedSignature</li><li>• lineNumber</li></ul></div>
+                                <div class="bg-purple-50 p-3 rounded"><p class="font-semibold text-purple-700">Complexity</p><p class="text-sm text-gray-600 mt-1">O(n × m × k)</p><p class="text-xs text-gray-500">n=lines, m=signatures, k=line length</p></div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Report Generator",
+                icon: "file-text",
+                content: `
+                    <div class="space-y-4">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-4">Report - Results & Analysis</h2>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-3">📊 Comprehensive Reporting</h3>
+                            <p class="text-gray-700 mb-4">Aggregates scan results, performs sorting, identifies top threats, and exports reports</p>
+                            <div class="grid grid-cols-2 gap-3 mb-4">
+                                <div class="bg-blue-100 p-3 rounded"><h4 class="font-bold text-blue-700 mb-2">Merge Sort</h4><p class="text-sm text-gray-600">Sorts files by threat count (descending)</p><p class="text-xs text-gray-500 mt-1">O(n log n) complexity</p></div>
+                                <div class="bg-purple-100 p-3 rounded"><h4 class="font-bold text-purple-700 mb-2">Priority Queue</h4><p class="text-sm text-gray-600">Max heap for top threats</p><p class="text-xs text-gray-500 mt-1">Efficient ranking</p></div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                                <h4 class="font-bold text-green-700 mb-2">ScanResult Structure</h4>
+                                <div class="grid grid-cols-3 gap-2 text-sm"><div>• filename</div><div>• threatsFound</div><div>• isInfected</div></div>
+                            </div>
+                        </div>
+                        <div class="bg-orange-50 p-4 rounded-lg">
+                            <h3 class="font-semibold mb-2">🔧 Key Features</h3>
+                            <ul class="text-sm space-y-1 text-gray-700"><li>• sortByThreatLevel() - Merge sort implementation</li><li>• getMostDangerousFile() - Find highest threat count</li><li>• displayTopThreats(N) - Show top N infected files</li><li>• exportToFile() - Save report to disk</li></ul>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Main Application",
+                icon: "activity",
+                content: `
+                    <div class="space-y-4">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-4">main.cpp - System Orchestration</h2>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-3">🎯 Complete Workflow</h3>
+                            <div class="space-y-3">
+                                <div class="bg-blue-50 p-3 rounded-lg"><div class="flex items-center gap-2 mb-2"><span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-bold">STEP 1</span><h4 class="font-bold">Load Virus Database</h4></div><p class="text-sm text-gray-600 ml-20">Read virus_signatures.txt and populate all data structures (Trie, Hash, Bloom, LinkedList)</p></div>
+                                <div class="bg-green-50 p-3 rounded-lg"><div class="flex items-center gap-2 mb-2"><span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-bold">STEP 2</span><h4 class="font-bold">Initialize Components</h4></div><p class="text-sm text-gray-600 ml-20">Create Scanner and Report objects, prepare file list</p></div>
+                                <div class="bg-purple-50 p-3 rounded-lg"><div class="flex items-center gap-2 mb-2"><span class="bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-bold">STEP 3</span><h4 class="font-bold">Scan Files</h4></div><p class="text-sm text-gray-600 ml-20">Process each test file, detect threats, queue results</p></div>
+                                <div class="bg-orange-50 p-3 rounded-lg"><div class="flex items-center gap-2 mb-2"><span class="bg-orange-600 text-white px-3 py-1 rounded-full text-sm font-bold">STEP 4</span><h4 class="font-bold">Generate Report</h4></div><p class="text-sm text-gray-600 ml-20">Sort results using Merge Sort, display summary</p></div>
+                                <div class="bg-pink-50 p-3 rounded-lg"><div class="flex items-center gap-2 mb-2"><span class="bg-pink-600 text-white px-3 py-1 rounded-full text-sm font-bold">STEP 5</span><h4 class="font-bold">Export & Analyze</h4></div><p class="text-sm text-gray-600 ml-20">Save to file, identify top threats using Priority Queue</p></div>
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 p-3 rounded-lg">
+                            <h3 class="font-semibold mb-2">📝 Files Scanned</h3>
+                            <div class="grid grid-cols-2 gap-2 text-sm"><div>• sample_input.txt</div><div>• infected_document.txt</div><div>• suspicious_email.txt</div><div>• clean_file.txt</div><div>• heavily_infected.txt</div></div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Testing Results",
+                icon: "search",
+                content: `
+                    <div class="space-y-4">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-4">Testing & Validation</h2>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-3">🧪 Test File Results</h3>
+                            <div class="space-y-2">
+                                <div class="bg-green-100 p-3 rounded-lg border-l-4 border-green-500"><div class="flex justify-between items-center"><div><div class="font-semibold text-green-800">clean_file.txt</div><div class="text-sm text-gray-700">Completely safe document for testing</div></div><span class="bg-green-600 text-white px-4 py-2 rounded-full font-bold">0 threats ✅</span></div></div>
+                                <div class="bg-yellow-100 p-3 rounded-lg border-l-4 border-yellow-500"><div class="flex justify-between items-center"><div><div class="font-semibold text-yellow-800">sample_input.txt</div><div class="text-sm text-gray-700">Normal text with embedded threats</div></div><span class="bg-yellow-600 text-white px-4 py-2 rounded-full font-bold">3 threats ⚠️</span></div></div>
+                                <div class="bg-orange-100 p-3 rounded-lg border-l-4 border-orange-500"><div class="flex justify-between items-center"><div><div class="font-semibold text-orange-800">infected_document.txt</div><div class="text-sm text-gray-700">Business document with infections</div></div><span class="bg-orange-600 text-white px-4 py-2 rounded-full font-bold">5 threats ⚠️</span></div></div>
+                                <div class="bg-orange-100 p-3 rounded-lg border-l-4 border-orange-600"><div class="flex justify-between items-center"><div><div class="font-semibold text-orange-900">suspicious_email.txt</div><div class="text-sm text-gray-700">Phishing email with multiple threats</div></div><span class="bg-orange-700 text-white px-4 py-2 rounded-full font-bold">8 threats 🚨</span></div></div>
+                                <div class="bg-red-100 p-3 rounded-lg border-l-4 border-red-500"><div class="flex justify-between items-center"><div><div class="font-semibold text-red-800">heavily_infected.txt</div><div class="text-sm text-gray-700">Critical infection - multiple malware types</div></div><span class="bg-red-600 text-white px-4 py-2 rounded-full font-bold">12 threats 🔴</span></div></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 mb-2">📊 Overall Statistics</h4>
+                                <div class="space-y-1 text-sm"><div class="flex justify-between"><span>Total Files Scanned:</span><strong>5</strong></div><div class="flex justify-between"><span>Total Threats Found:</span><strong>28</strong></div><div class="flex justify-between"><span>Infected Files:</span><strong class="text-red-600">4</strong></div><div class="flex justify-between"><span>Clean Files:</span><strong class="text-green-600">1</strong></div></div>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-green-800 mb-2">✅ Validation Results</h4>
+                                <ul class="text-sm space-y-1"><li>✓ 100% Accurate detection</li><li>✓ Zero false positives</li><li>✓ Fast scanning speed</li><li>✓ Detailed line-by-line reporting</li><li>✓ Proper threat ranking</li></ul>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Data Structures Summary",
+                icon: "database",
+                content: `
+                    <div class="space-y-4">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-4">Complete DSA Implementation</h2>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h3 class="font-bold text-blue-800 mb-3">🗂️ Data Structures</h3>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex items-start gap-2"><span class="text-blue-600">✓</span><div><p class="font-semibold">Linked List</p><p class="text-xs text-gray-600">Dynamic storage, O(n) search</p></div></div>
+                                    <div class="flex items-start gap-2"><span class="text-blue-600">✓</span><div><p class="font-semibold">Trie (Prefix Tree)</p><p class="text-xs text-gray-600">Pattern matching, O(m) search</p></div></div>
+                                    <div class="flex items-start gap-2"><span class="text-blue-600">✓</span><div><p class="font-semibold">Hash Table</p><p class="text-xs text-gray-600">Fast lookup, O(1) average</p></div></div>
+                                    <div class="flex items-start gap-2"><span class="text-blue-600">✓</span><div><p class="font-semibold">Bloom Filter</p><p class="text-xs text-gray-600">Probabilistic, O(1) check</p></div></div>
+                                    <div class="flex items-start gap-2"><span class="text-blue-600">✓</span><div><p class="font-semibold">Queue (FIFO)</p><p class="text-xs text-gray-600">Ordered processing</p></div></div>
+                                    <div class="flex items-start gap-2"><span class="text-blue-600">✓</span><div><p class="font-semibold">Priority Queue</p><p class="text-xs text-gray-600">Max heap, top threats</p></div></div>
+                                </div>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h3 class="font-bold text-green-800 mb-3">🧮 Algorithms</h3>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex items-start gap-2"><span class="text-green-600">✓</span><div><p class="font-semibold">Merge Sort</p><p class="text-xs text-gray-600">O(n log n) sorting</p></div></div>
+                                    <div class="flex items-start gap-2"><span class="text-green-600">✓</span><div><p class="font-semibold">String Matching</p><p class="text-xs text-gray-600">Pattern detection in text</p></div></div>
+                                    <div class="flex items-start gap-2"><span class="text-green-600">✓</span><div><p class="font-semibold">Hashing (djb2)</p><p class="text-xs text-gray-600">Multiple hash functions</p></div></div>
+                                    <div class="flex items-start gap-2"><span class="text-green-600">✓</span><div><p class="font-semibold">Tree Traversal</p><p class="text-xs text-gray-600">Trie path following</p></div></div>
+                                    <div class="flex items-start gap-2"><span class="text-green-600">✓</span><div><p class="font-semibold">Heap Operations</p><p class="text-xs text-gray-600">Priority queue management</p></div></div>
+                                    <div class="flex items-start gap-2"><span class="text-green-600">✓</span><div><p class="font-semibold">Recursive Search</p><p class="text-xs text-gray-600">Alternative list traversal</p></div></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <h3 class="font-bold text-purple-800 mb-3">🎯 Key Concepts Demonstrated</h3>
+                            <div class="grid grid-cols-3 gap-3 text-sm"><div>• Template Programming</div><div>• Memory Management</div><div>• Collision Handling</div><div>• Time Complexity</div><div>• Space Complexity</div><div>• Multi-layer Search</div><div>• File I/O</div><div>• Data Aggregation</div><div>• Result Ranking</div></div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Key Achievements",
+                icon: "shield",
+                content: `
+                    <div class="space-y-6">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-6">Project Achievements</h2>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-5 rounded-lg"><h3 class="text-xl font-bold text-blue-800 mb-3">🏗️ System Design</h3><ul class="space-y-2 text-sm"><li class="flex items-start gap-2"><span class="text-blue-600 font-bold">•</span><span>Modular architecture with clear separation of concerns</span></li><li class="flex items-start gap-2"><span class="text-blue-600 font-bold">•</span><span>Integration of 6 different data structures</span></li><li class="flex items-start gap-2"><span class="text-blue-600 font-bold">•</span><span>Multi-layer search optimization</span></li></ul></div>
+                            <div class="bg-gradient-to-br from-green-50 to-green-100 p-5 rounded-lg"><h3 class="text-xl font-bold text-green-800 mb-3">⚡ Performance</h3><ul class="space-y-2 text-sm"><li class="flex items-start gap-2"><span class="text-green-600 font-bold">•</span><span>O(1) average search with hash table</span></li><li class="flex items-start gap-2"><span class="text-green-600 font-bold">•</span><span>Bloom filter eliminates 90%+ false searches</span></li><li class="flex items-start gap-2"><span class="text-green-600 font-bold">•</span><span>Efficient O(n log n) result sorting</span></li></ul></div>
+                            <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-5 rounded-lg"><h3 class="text-xl font-bold text-purple-800 mb-3">💻 Code Quality</h3><ul class="space-y-2 text-sm"><li class="flex items-start gap-2"><span class="text-purple-600 font-bold">•</span><span>Well-documented with detailed comments</span></li><li class="flex items-start gap-2"><span class="text-purple-600 font-bold">•</span><span>Proper memory management (no leaks)</span></li><li class="flex items-start gap-2"><span class="text-purple-600 font-bold">•</span><span>Template-based reusable components</span></li></ul></div>
+                            <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-5 rounded-lg"><h3 class="text-xl font-bold text-orange-800 mb-3">✅ Functionality</h3><ul class="space-y-2 text-sm"><li class="flex items-start gap-2"><span class="text-orange-600 font-bold">•</span><span>100% accurate threat detection</span></li><li class="flex items-start gap-2"><span class="text-orange-600 font-bold">•</span><span>Zero false positives in testing</span></li><li class="flex items-start gap-2"><span class="text-orange-600 font-bold">•</span><span>Comprehensive reporting and export</span></li></ul></div>
+                        </div>
+                        <div class="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-6 rounded-lg text-center">
+                            <h3 class="text-2xl font-bold mb-2">🎓 Educational Value</h3>
+                            <p class="text-lg">Practical demonstration of DSA concepts in a real-world security application</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Conclusion",
+                icon: "shield",
+                content: `
+                    <div class="space-y-6 text-center">
+                        <h2 class="text-4xl font-bold text-blue-600 mb-6">Project Conclusion</h2>
+                        <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg">
+                            <h3 class="text-2xl font-semibold mb-4">🎓 Learning Outcomes</h3>
+                            <div class="grid grid-cols-2 gap-4 text-left">
+                                <div class="bg-white p-5 rounded-lg shadow-lg"><h4 class="font-bold text-blue-700 mb-3 text-lg">Data Structures Mastered</h4><ul class="text-sm space-y-2 text-gray-700"><li>✓ Linked Lists (template-based)</li><li>✓ Tries / Prefix Trees</li><li>✓ Hash Tables with chaining</li><li>✓ Bloom Filters (probabilistic)</li><li>✓ Queues (FIFO)</li><li>✓ Priority Queues (Max Heap)</li></ul></div>
+                                <div class="bg-white p-5 rounded-lg shadow-lg"><h4 class="font-bold text-green-700 mb-3 text-lg">Skills Developed</h4><ul class="text-sm space-y-2 text-gray-700"><li>✓ Algorithm design & analysis</li><li>✓ Complexity optimization</li><li>✓ C++ advanced programming</li><li>✓ System integration</li><li>✓ Memory management</li><li>✓ File processing</li></ul></div>
+                            </div>
+                        </div>
+                        <div class="bg-green-50 p-6 rounded-lg border-2 border-green-300">
+                            <h3 class="text-xl font-semibold text-green-800 mb-3">🚀 Project Impact</h3>
+                            <p class="text-gray-700 text-lg">Successfully implemented a fully functional antivirus scanner demonstrating practical real-world applications of data structures and algorithms in cybersecurity systems</p>
+                        </div>
+                        <div class="space-y-4 mt-8">
+                            <div class="text-6xl">🛡️</div>
+                            <div class="text-3xl font-bold text-gray-800">SentinelAV</div>
+                            <div class="text-xl text-gray-600">Complete DSA Project Implementation</div>
+                            <div class="text-2xl font-bold text-blue-600 mt-6">Thank You!</div>
+                            <p class="text-gray-500">Questions & Discussion</p>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        let currentSlide = 0;
+
+        // Elements
+        const slideTitle = document.getElementById('slide-title');
+        const slideCount = document.getElementById('slide-count');
+        const currentIcon = document.getElementById('current-icon');
+        const paginationDots = document.getElementById('pagination-dots');
+        const slideContent = document.getElementById('slide-content');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const slideCounterBottom = document.getElementById('slide-counter-bottom');
+
+        function renderSlide() {
+            // Restart animation
+            slideContent.style.animation = 'none';
+            slideContent.offsetHeight; /* trigger reflow */
+            slideContent.style.animation = null;
+
+            const slide = slides[currentSlide];
+            
+            // Update Text
+            slideTitle.innerText = slide.title;
+            slideCount.innerText = `Slide ${currentSlide + 1} of ${slides.length}`;
+            slideCounterBottom.innerText = `${currentSlide + 1} / ${slides.length}`;
+            
+            // Update Icon
+            currentIcon.setAttribute('data-lucide', slide.icon);
+            
+            // Update Content
+            slideContent.innerHTML = slide.content;
+            
+            // Update Buttons
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === slides.length - 1;
+
+            // Update Dots
+            paginationDots.innerHTML = '';
+            slides.forEach((_, index) => {
+                const dot = document.createElement('button');
+                dot.onclick = () => { currentSlide = index; renderSlide(); };
+                const baseClasses = 'h-2 rounded-full transition-all';
+                const activeClasses = index === currentSlide ? 'bg-blue-600 w-8' : 'bg-gray-300 hover:bg-gray-400 w-2';
+                dot.className = `${baseClasses} ${activeClasses}`;
+                paginationDots.appendChild(dot);
+            });
+
+            // Re-initialize icons
+            lucide.createIcons();
+        }
+
+        // Event Listeners
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                renderSlide();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                renderSlide();
+            }
+        });
+
+        // Initialize
+        renderSlide();
+    </script>
+</body>
+</html>

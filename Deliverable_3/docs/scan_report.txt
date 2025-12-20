@@ -1,0 +1,16 @@
+========================================
+      SENTINELAV SCAN REPORT
+========================================
+
+Total Files Scanned: 5
+----------------------------------------
+[INFECTED] heavily_infected.txt (12 threats)
+[INFECTED] suspicious_email.txt (8 threats)
+[INFECTED] infected_document.txt (5 threats)
+[INFECTED] sample_input.txt (3 threats)
+[CLEAN]    clean_file.txt (0 threats)
+----------------------------------------
+Total Threats Detected: 28
+Infected Files: 4
+Clean Files: 1
+========================================
